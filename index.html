@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ctrl-Identity｜《光·遇》純本機桌面懸浮 AI 助手</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@500;700&display=swap">
+<style>
+:root{--bg:#ece4cf;--surface:#f5efdf;--ink:#2a2418;--sub:#5c5240;--line:#d6cab0;--acc:#7a5c1e;--on-acc:#f5efdf;--b1:#8a6420;--b2:#5f7a58;--b3:#4f6b82;color-scheme:light;
+--serif:"Noto Serif TC","Songti TC","PMingLiU",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#090d16;--surface:#111827;--ink:#f3f4f6;--sub:#b4bac5;--line:#2e3849;--acc:#f59e0b;--on-acc:#0b1018;--b1:#f0a93a;--b2:#7fbf9f;--b3:#8bb0dc;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#090d16;--surface:#111827;--ink:#f3f4f6;--sub:#b4bac5;--line:#2e3849;--acc:#f59e0b;--on-acc:#0b1018;--b1:#f0a93a;--b2:#7fbf9f;--b3:#8bb0dc;color-scheme:dark}
+*,*::before,*::after{box-sizing:inherit;transition:background-color .7s ease,color .7s ease,border-color .7s ease,box-shadow .7s ease}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important}}
+html{scroll-padding-top:64px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.8;font-size:16px;-webkit-text-size-adjust:100%}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+nav{position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:20px;height:56px}
+.logo{font-weight:700;letter-spacing:.02em;margin-right:auto;white-space:nowrap}
+.logo small{font-weight:400;color:var(--sub);margin-left:10px;font-size:13px}
+.links{display:flex;gap:20px;font-size:14px;color:var(--sub)}
+.links a:hover{color:var(--ink)}
+#theme{font:inherit;font-size:13px;color:var(--ink);background:none;border:1px solid var(--line);padding:5px 14px;cursor:pointer;border-radius:999px}
+#theme:hover{border-color:var(--ink)}
+.hero{padding:96px 0 72px}
+h1{font-family:var(--serif);font-weight:500;font-size:clamp(34px,7.5vw,76px);line-height:1.2;letter-spacing:.02em;margin:0 0 32px;max-width:11em}
+.sub{max-width:30em;color:var(--sub);font-size:17px;margin:0 0 36px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:11px 24px;border:0;border-radius:999px;font-weight:500;background:var(--b3);color:var(--on-acc)}
+.btn.main{background:var(--b1)}
+.btn.g{background:var(--b2)}
+.btn:hover{opacity:.85}
+section{border-top:1px solid var(--line);padding:56px 0 72px}
+.row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,3fr);gap:24px 48px}
+h2{font-family:var(--serif);font-size:26px;line-height:1.4;margin:0}
+.note{color:var(--sub);font-size:14px;margin:8px 0 0}
+.item{padding:22px 24px;background:var(--surface);border-radius:16px;margin-bottom:14px}
+.item h3{font-family:var(--serif);font-size:19px;margin:0 0 6px}
+.item p{margin:0;color:var(--sub);font-size:15px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}.two .item{margin:0}
+code{font-family:ui-monospace,Consolas,monospace;font-size:.86em;background:var(--bg);border:1px solid var(--line);padding:1px 7px;border-radius:6px;color:var(--ink)}
+.chars{display:grid;grid-template-columns:200px 1fr;gap:32px}
+.tabs{display:flex;flex-direction:column;gap:8px}
+.tabs button{font:inherit;text-align:left;color:var(--sub);background:var(--surface);border:0;border-radius:12px;padding:12px 16px;cursor:pointer}
+.tabs button[aria-selected=true]{color:var(--ink);font-weight:700;box-shadow:0 0 0 1.5px var(--acc)}
+.panel{background:var(--surface);border-radius:16px;padding:24px}
+.panel h3{font-family:var(--serif);font-size:24px;margin:0 0 4px}
+.panel dl{display:grid;grid-template-columns:5em 1fr;gap:10px 16px;margin:20px 0 0;padding-top:16px;border-top:1px solid var(--line);color:var(--sub)}
+.panel dt{color:var(--ink);font-weight:500}.panel dd{margin:0}
+.dl{display:grid;grid-template-columns:1fr auto auto;gap:20px;align-items:center}
+.dl .size{color:var(--sub);font-size:14px}
+.log .item{display:grid;grid-template-columns:150px 1fr;gap:20px}
+.log h3{font-family:var(--sans);font-size:16px}
+footer{border-top:1px solid var(--line);padding:32px 0 56px;color:var(--sub);font-size:14px}
+footer p{margin:0 0 8px;max-width:46em}footer b{color:var(--ink)}
+@media (max-width:760px){.row,.chars,.log .item{grid-template-columns:1fr}.two{grid-template-columns:1fr}.links{display:none}.dl{grid-template-columns:1fr auto}.dl .btn{grid-column:1/-1;text-align:center}.hero{padding:56px 0 48px}.tabs{flex-direction:row;flex-wrap:wrap}.tabs button{padding:8px 14px}}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+<div class="logo">&lt;Ctrl-Identity&gt;<small>v0.97.3 Alpha</small></div>
+<div class="links"><a href="#features">核心特色</a><a href="#characters">角色展示</a><a href="#download">下載中心</a><a href="#changelog">更新日誌</a></div>
+<button id="theme" type="button" aria-label="切換深色或淺色模式">深色</button>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+<h1>《光·遇》純本機桌面懸浮 AI 助手</h1>
+<p class="sub">離線保護隱私、雙軌知識防幻覺、純顧問合規設計。對話只留在你的電腦，不遮擋遊戲畫面。</p>
+<div class="btns">
+<a class="btn main" href="https://github.com/seanchou0615-lab/ctrl-identity/releases">立即下載 v0.97.3</a>
+<a class="btn" href="https://github.com/seanchou0615-lab/ctrl-identity">檢視 GitHub 原始碼</a>
+</div>
+</div></header>
+
+<section id="features"><div class="wrap row">
+<div><h2>核心特色</h2><p class="note">每一項都為了「不干擾遊戲」而設計。</p></div>
+<div class="two">
+<div class="item"><h3>100% 純本機推論</h3><p>棄用官方 <code>ollama</code> SDK，改以 <code>urllib.request</code> 直連 <code>127.0.0.1:11434</code>，並內建 Proxy 自動繞過。安裝包從 47.4 MB 縮減 18% 至 38.9 MB，無需雲端 API Key。</p></div>
+<div class="item"><h3>雙軌防幻覺知識庫</h3><p><code>knowledge.json</code>（每日任務、復刻先祖）與 <code>knowledge_base.json</code>（黑話詞典）分離。查無資料時誠實回答「不確定」，升級時不覆蓋你自訂的筆記。</p></div>
+<div class="item"><h3>黫㵾海辯論引擎</h3><p><code>core/debate.py</code> 依序呼叫三個意識切面，採 ⅔（67%）共識決，單一無效回傳不影響最終採決。</p></div>
+<div class="item"><h3>懸浮小球與非干擾 UX</h3><p>CustomTkinter 340×600 面板與邊緣吸附，Toast 提示 1.5 秒自動消失。使用 <code>overrideredirect</code> + <code>-topmost</code>，嚴禁 <code>focus_force</code>，不搶鍵盤焦點。</p></div>
+</div>
+</div></section>
+
+<section id="characters"><div class="wrap row">
+<div><h2>角色與模式</h2><p class="note">切換查看各模式的定位與預設模型。</p></div>
+<div class="chars"><div class="tabs" role="tablist" id="tabs"></div><div class="panel" id="panel" role="tabpanel" aria-live="polite"></div></div>
+</div></section>
+
+<section id="download"><div class="wrap row">
+<div><h2>下載中心</h2><p class="note">v0.97.3，檔案連結至 GitHub Releases。</p></div>
+<div>
+<div class="item dl"><div><h3>完整安裝檔</h3><p>自選安裝路徑、自動建立桌面捷徑、附完整解除安裝程式。<br><code>CtrlIdentity-Setup.zip</code></p></div><span class="size">36.7 MB</span><a class="btn main" href="https://github.com/seanchou0615-lab/ctrl-identity/releases">下載</a></div>
+<div class="item dl"><div><h3>免安裝便攜版</h3><p>解壓縮即用，設定與資料跟隨資料夾移動。<br><code>CtrlIdentity-portable.zip</code></p></div><span class="size">18.8 MB</span><a class="btn g" href="https://github.com/seanchou0615-lab/ctrl-identity/releases">下載</a></div>
+<div class="item dl"><div><h3>開源原始碼</h3><p>完整 Python 原始碼、測試套件（<code>tests/</code>）與開發者工具鏈。<br><code>ctrl-identity-0.97.3.zip</code></p></div><span class="size">411 KB</span><a class="btn" href="https://github.com/seanchou0615-lab/ctrl-identity/releases">下載</a></div>
+</div>
+</div></section>
+
+<section id="changelog"><div class="wrap row">
+<div><h2>更新日誌</h2><p class="note">近期演進紀錄。</p></div>
+<div class="log">
+<div class="item"><h3>v0.97.0 – v0.97.3</h3><p>修復快捷鍵截圖：150 ms 內按下取消時不再截圖送出。詞典三向合併（<code>core/merge.py</code>），社群推送新版時，你修改過的條目永遠不被覆蓋。Ollama 自動繞過系統 Proxy，新增 <code>config.json</code> 原子寫入與掃描重入保護。</p></div>
+<div class="item"><h3>Beta 0.95.1 – 0.96</h3><p>安裝包由 47.4 MB 降至 38.9 MB（−18%），以內建寫法替換外部庫。新增 <code>tools/eval_models.py</code>，以固定題庫測試模型，產生待補清單以維護知識庫。</p></div>
+</div>
+</div></section>
+
+<footer><div class="wrap">
+<p><b>合規宣告</b>　本專案為顧問型工具，不包含任何模擬鍵盤或滑鼠輸入的自動化模組，遵循遊戲服務條款。</p>
+<p><b>免責聲明</b>　本專案為玩家自製的非官方工具，與《Sky 光·遇》及其開發商無任何隸屬關係。</p>
+<p><b>開源授權</b>　GPL / MIT</p>
+</div></footer>
+
+<script>
+const M=[
+["🕯️ 小光","跑圖嚮導","每日任務、大蠟燭路線、時間安排專家。","xiaoguang-max / qwen2.5:7b","精準對接當日任務點位，回答簡明扼要。"],
+["🪶 小遇","貼心夥伴","玩家隨身交談夥伴，溫和耐心的對話體驗。","gemma2 / llama3 系列","注重對話語氣與陪伴感，適度給予溫暖回覆。"],
+["🌊 黫㵾海","三切面辯論","複合意識交鋒，處理爭議或複雜策略。","依序呼叫三個切面","黫分析核心風險與規則底線；㵾從玩家效益與操作可行性著手；海總結分歧，提出最終折衷路徑。≥ ⅔（67%）贊成票即通過。"],
+["⚡ Lite 模式","零 AI 本地對照","完全不啟動 Ollama 推論模型，零 CPU/GPU 負擔。","無需模型","直接讀取本地 data/ 資料庫，毫秒級顯示每日任務與復刻先祖狀態。"]];
+const tabs=document.getElementById("tabs"),panel=document.getElementById("panel");
+function show(i){
+[...tabs.children].forEach((b,j)=>b.setAttribute("aria-selected",i===j));
+const m=M[i];panel.innerHTML="";
+const h=document.createElement("h3");h.textContent=m[0]+"　"+m[1];
+const p=document.createElement("p");p.style.cssText="margin:0;color:var(--sub)";p.textContent=m[2];
+const d=document.createElement("dl");
+[["預設模型",m[3]],["特色",m[4]]].forEach(([k,v])=>{const a=document.createElement("dt");a.textContent=k;const b=document.createElement("dd");b.textContent=v;d.append(a,b)});
+panel.append(h,p,d);
+}
+M.forEach((m,i)=>{const b=document.createElement("button");b.type="button";b.setAttribute("role","tab");b.textContent=m[0];b.onclick=()=>show(i);tabs.appendChild(b)});
+show(0);
+const root=document.documentElement,tb=document.getElementById("theme");
+const mq=window.matchMedia("(prefers-color-scheme: dark)");
+function cur(){return root.dataset.theme||(mq.matches?"dark":"light")}
+function label(){tb.textContent=cur()==="dark"?"淺色":"深色"}
+try{const s=localStorage.getItem("theme");if(s)root.dataset.theme=s}catch(e){}
+label();
+tb.onclick=()=>{const n=cur()==="dark"?"light":"dark";root.dataset.theme=n;try{localStorage.setItem("theme",n)}catch(e){}label()};
+</script>
+</body>
+</html>
