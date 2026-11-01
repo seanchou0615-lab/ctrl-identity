@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ctrl-Identity｜《光·遇》純本機桌面懸浮 AI 助手 & 外掛審查站</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@500;700&display=swap">
+<style>
+:root{--bg:#ece4cf;--surface:#f5efdf;--ink:#2a2418;--sub:#5c5240;--line:#d6cab0;--acc:#7a5c1e;--on-acc:#f5efdf;--b1:#8a6420;--b2:#5f7a58;--b3:#4f6b82;--ok:#15803d;--err:#b91c1c;color-scheme:light;
+--serif:"Noto Serif TC","Songti TC","PMingLiU",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;box-sizing:border-box}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#090d16;--surface:#111827;--ink:#f3f4f6;--sub:#b4bac5;--line:#2e3849;--acc:#f59e0b;--on-acc:#0b1018;--b1:#f0a93a;--b2:#7fbf9f;--b3:#8bb0dc;--ok:#10b981;--err:#ef4444;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#090d16;--surface:#111827;--ink:#f3f4f6;--sub:#b4bac5;--line:#2e3849;--acc:#f59e0b;--on-acc:#0b1018;--b1:#f0a93a;--b2:#7fbf9f;--b3:#8bb0dc;--ok:#10b981;--err:#ef4444;color-scheme:dark}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:64px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.75;font-size:16px}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+nav{position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:20px;height:56px}
+.logo{font-weight:700;margin-right:auto;white-space:nowrap}
+.logo small{font-weight:400;color:var(--sub);margin-left:10px;font-size:13px}
+.links{display:flex;gap:18px;font-size:14px;color:var(--sub)}
+.links a:hover{color:var(--ink)}
+#theme{font:inherit;font-size:13px;color:var(--ink);background:none;border:1px solid var(--line);padding:5px 14px;cursor:pointer;border-radius:999px}
+.hero{padding:80px 0 60px}
+h1{font-family:var(--serif);font-weight:500;font-size:clamp(32px,6.5vw,68px);line-height:1.2;margin:0 0 24px}
+.sub{max-width:34em;color:var(--sub);font-size:17px;margin:0 0 32px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:10px 22px;border:0;border-radius:999px;font-weight:500;background:var(--b3);color:var(--on-acc);cursor:pointer;font-size:15px}
+.btn.main{background:var(--b1)}
+.btn.g{background:var(--b2)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+section{border-top:1px solid var(--line);padding:52px 0 64px}
+.row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,3fr);gap:24px 48px}
+h2{font-family:var(--serif);font-size:25px;margin:0}
+.note{color:var(--sub);font-size:14px;margin:8px 0 0}
+.item{padding:20px 22px;background:var(--surface);border-radius:14px;margin-bottom:14px;border:1px solid var(--line)}
+.item h3{font-family:var(--serif);font-size:18px;margin:0 0 6px}
+.item p{margin:0;color:var(--sub);font-size:15px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}.two .item{margin:0}
+code{font-family:ui-monospace,Consolas,monospace;font-size:.86em;background:var(--bg);border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--ink)}
+.chars{display:grid;grid-template-columns:200px 1fr;gap:28px}
+.tabs{display:flex;flex-direction:column;gap:8px}
+.tabs button{font:inherit;text-align:left;color:var(--sub);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:11px 16px;cursor:pointer}
+.tabs button[aria-selected=true]{color:var(--ink);font-weight:700;border-color:var(--acc)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px}
+.panel h3{font-family:var(--serif);font-size:22px;margin:0 0 6px}
+.panel dl{display:grid;grid-template-columns:5.5em 1fr;gap:10px 16px;margin:18px 0 0;padding-top:14px;border-top:1px solid var(--line);color:var(--sub)}
+.panel dt{color:var(--ink);font-weight:500}.panel dd{margin:0}
+.dl{display:grid;grid-template-columns:1fr auto auto;gap:20px;align-items:center}
+.dl .size{color:var(--sub);font-size:14px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.field{display:flex;flex-direction:column;gap:5px}
+.field.full{grid-column:1/-1}
+.field label{font-size:13px;font-weight:500;color:var(--ink)}
+.field input,.field select,.field textarea{font:inherit;font-size:14px;padding:9px 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.dropzone{border:2px dashed var(--line);border-radius:12px;padding:24px;text-align:center;cursor:pointer;background:var(--bg);margin-bottom:14px}
+.dropzone:hover{border-color:var(--acc)}
+.status-banner{padding:10px 14px;border-radius:10px;font-size:14px;margin-bottom:14px;border:1px solid var(--acc);background:rgba(245,158,11,.1)}
+.report{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;white-space:pre-wrap;margin:14px 0;max-height:240px;overflow:auto}
+.ok{color:var(--ok)}.err{color:var(--err)}
+footer{border-top:1px solid var(--line);padding:32px 0 56px;color:var(--sub);font-size:14px}
+footer p{margin:0 0 8px;max-width:52em}footer b{color:var(--ink)}
+@media (max-width:760px){.row,.chars,.two,.form-grid{grid-template-columns:1fr}.links{display:none}.dl{grid-template-columns:1fr auto}.dl .btn{grid-column:1/-1;text-align:center}.tabs{flex-direction:row;flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+<div class="logo">&lt;Ctrl-Identity&gt;<small>Beta 0.98.2</small></div>
+<div class="links">
+  <a href="#features">核心特色</a>
+  <a href="#characters">角色模式</a>
+  <a href="#submit">外掛與 MID 投稿審查</a>
+  <a href="#rules">製作規定</a>
+  <a href="#download">下載中心</a>
+  <a href="#changelog">更新日誌</a>
+</div>
+<button id="theme" type="button">深色</button>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+<h1>《光·遇》純本機桌面懸浮 AI 助手</h1>
+<p class="sub">離線保護隱私、雙軌知識防幻覺、15 鍵瀑布流跟彈與安全外掛市集。對話與資料只留在你的電腦，絕不搶奪遊戲視窗焦點。</p>
+<div class="btns">
+<a class="btn main" href="#download">立即下載 Beta 0.98.2</a>
+<a class="btn g" href="#submit">📤 投稿外掛 / .mid 樂譜</a>
+<a class="btn" href="https://github.com/seanchou0615-lab/ctrl-identity">GitHub 原始碼</a>
+</div>
+</div></header>
+
+<section id="features"><div class="wrap row">
+<div><h2>核心特色</h2><p class="note">極簡 38.9 MB，不干擾遊戲操作。</p></div>
+<div class="two">
+<div class="item"><h3>100% 純本機推論</h3><p>標準庫 <code>urllib.request</code> 直連本機 Ollama <code>127.0.0.1:11434</code>，內建系統 Proxy 繞過與冷啟動即時中斷，零雲端 API 成本。</p></div>
+<div class="item"><h3>雙軌防幻覺知識庫</h3><p><code>knowledge.json</code>（時效任務/先祖）與 <code>knowledge_base.json</code>（475 條黑話詞典）分離，三向合併升級永不覆蓋個人筆記。</p></div>
+<div class="item"><h3>🎼 譜架、瀑布流與音檔轉譜</h3><p>穿透式 15 鍵琥珀色瀑布流提示（<code>WS_EX_TRANSPARENT</code> 只顯示不代彈）。支援匯入 <code>.mid</code>（自動濾除第 10 聲道鼓聲與智慧移調）及 WAV/MP3 轉譜。</p></div>
+<div class="item"><h3>🧩 外掛市場與可選自動彈奏</h3><p>支援下載已簽章的資料外掛與樂譜包（強制 SHA-256 與 SSRF 防護）。另附預設關閉的 <code>SendInput</code> 掃描碼自動彈奏（五層防護 + 全域緊急停止鍵）。</p></div>
+</div>
+</div></section>
+
+<section id="characters"><div class="wrap row">
+<div><h2>角色與模式</h2><p class="note">严格對齊 SPEC §3 唯一定義。</p></div>
+<div class="chars"><div class="tabs" role="tablist" id="tabs"></div><div class="panel" id="panel" role="tabpanel" aria-live="polite"></div></div>
+</div></section>
+
+<section id="submit"><div class="wrap row">
+<div>
+  <h2>外掛與 .mid 投稿審查站</h2>
+  <p class="note">所有上傳皆須通過自動安全檢查與人工審核。</p>
+</div>
+<div class="item" style="margin:0">
+  <div class="status-banner" id="server-banner">
+    ⏳ <strong>審查伺服器狀態</strong>：<code>http://ctrl-identity-review.duckdns.org</code> 目前<strong>尚未開放連線</strong>。您仍可使用下方「瀏覽器端自動預審器」先行驗證檔案格式、產生 <code>plugin.json</code> 與計算 SHA-256。
+  </div>
+
+  <div class="form-grid">
+    <div class="field">
+      <label for="sub-kind">投稿類型</label>
+      <select id="sub-kind">
+        <option value="plugin">🧩 資料外掛包 (.zip 含 plugin.json)</option>
+        <option value="midi">🎵 MIDI 樂譜檔 (.mid / .midi)</option>
+        <option value="sheet">🎼 光遇 15 鍵樂譜 (.json)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="sub-id">外掛 / 樂譜 ID（小寫英數與 - _）</label>
+      <input id="sub-id" type="text" placeholder="例：sky-candle-routes" pattern="[a-z0-9_-]{3,64}">
+    </div>
+    <div class="field">
+      <label for="sub-name">顯示名稱</label>
+      <input id="sub-name" type="text" placeholder="例：雲野高效率燭火路線">
+    </div>
+    <div class="field">
+      <label for="sub-ver">版本號（SemVer 遞增）</label>
+      <input id="sub-ver" type="text" value="1.0.0" placeholder="1.0.0">
+    </div>
+    <div class="field">
+      <label for="sub-author">作者暱稱</label>
+      <input id="sub-author" type="text" placeholder="你的名字">
+    </div>
+    <div class="field">
+      <label for="sub-license">授權條款</label>
+      <input id="sub-license" type="text" value="CC-BY-4.0">
+    </div>
+    <div class="field full">
+      <label for="sub-desc">內容說明（300 字內）</label>
+      <textarea id="sub-desc" rows="2" placeholder="簡述路線、詞條或樂譜來源…"></textarea>
+    </div>
+  </div>
+
+  <div class="dropzone" id="dropzone" onclick="document.getElementById('file-input').click()">
+    <input type="file" id="file-input" accept=".zip,.mid,.midi,.json" style="display:none">
+    <div id="drop-label">📁 點擊或拖曳檔案至此進行本地自動審查（支援 <code>.zip</code> / <code>.mid</code> / <code>.json</code>）</div>
+  </div>
+
+  <label style="display:flex;gap:8px;align-items:center;font-size:14px;margin-bottom:12px">
+    <input type="checkbox" id="sub-rights">
+    <span>我聲明擁有此檔案之散布授權，且未包含任何惡意程式或違規自動化腳本。</span>
+  </label>
+
+  <div class="btns">
+    <button class="btn g" type="button" id="btn-verify">1. 執行本地自動預審 & 計算 SHA-256</button>
+    <button class="btn main" type="button" id="btn-upload" disabled>2. 送交審查伺服器（隔離區）</button>
+    <button class="btn" type="button" id="btn-gen-manifest">下載標準 plugin.json</button>
+  </div>
+
+  <div class="report" id="audit-report">等待選擇檔案…</div>
+</div>
+</div></section>
+
+<section id="rules"><div class="wrap row">
+<div><h2>外掛與樂譜製作規定</h2><p class="note">SPEC §14 強制標準。</p></div>
+<div class="two">
+  <div class="item">
+    <h3>1. 套件格式與 Manifest</h3>
+    <p>外掛必須打包為 <code>.zip</code>（上限 10 MB），根目錄含 <code>plugin.json</code>，必填欄位：<code>id</code>、<code>name</code>、<code>version</code>、<code>type</code>（公開市場僅收 <code>"data"</code>）、<code>min_app_version</code>、<code>author</code>、<code>license</code>。安裝器以作者 manifest 為準，與索引不符即拒絕。</p>
+  </div>
+  <div class="item">
+    <h3>2. 資料外掛白名單</h3>
+    <p><code>data</code> 外掛壓縮包內<strong>僅允許 <code>.json</code> 檔案</strong>；嚴禁絕對路徑、<code>..</code> 跳脫路徑（Zip Slip）與符號連結。樂譜 JSON 須通過 <code>sheet.validate</code>：音符數 ≤ 20,000、鍵索引 <code>0..14</code>、單音長度 <code>0.05s ~ 30.0s</code>、嚴禁 <code>NaN/Infinity</code>。</p>
+  </div>
+  <div class="item">
+    <h3>3. MIDI (.mid) 規範</h3>
+    <p>檔案大小 ≤ 2 MB，必須具備標準 <code>MThd</code> 標頭且非 SMPTE 時間格式。系統匯入時會自動排除第 10 聲道（Channel 9 打擊樂鼓聲），並依 15 鍵自然音階計算最佳半音移調。</p>
+  </div>
+  <div class="item">
+    <h3>4. 雙重審查與撤銷機制</h3>
+    <p>上傳後先進入伺服器隔離區（不直接寫入 <code>plugins.json</code>）。通過自動腳本安檢與管理員人工試聽/確認版權後，才會附加上 <code>sha256</code> 與 <code>review_id</code> 上架。若發現侵權或異常，將列入 <code>revoked</code> 清單由客戶端自動停用。</p>
+  </div>
+</div>
+</div></section>
+
+<section id="download"><div class="wrap row">
+<div><h2>下載中心</h2><p class="note">Beta 0.98.2，連線至 GitHub Releases。</p></div>
+<div>
+<div class="item dl"><div><h3>完整安裝檔</h3><p>自選路徑、桌面/開始選單捷徑、升級保留設定與詞典。<br><code>CtrlIdentity-Setup.zip</code></p></div><span class="size">38.9 MB</span><a class="btn main" href="https://github.com/seanchou0615-lab/ctrl-identity/releases/latest">下載</a></div>
+<div class="item dl"><div><h3>免安裝便攜版</h3><p>解壓即用（onedir 架構，不依賴可寫的 <code>%TEMP%</code>）。<br><code>CtrlIdentity-portable.zip</code></p></div><span class="size">38.9 MB</span><a class="btn g" href="https://github.com/seanchou0615-lab/ctrl-identity/releases/latest">下載</a></div>
+<div class="item dl"><div><h3>開源原始碼</h3><p>完整 Python 原始碼、測試套件與建置腳本。<br><code>ctrl-identity-0.98.2.zip</code></p></div><span class="size">~420 KB</span><a class="btn" href="https://github.com/seanchou0615-lab/ctrl-identity/releases/latest">下載</a></div>
+</div>
+</div></section>
+
+<section id="changelog"><div class="wrap row">
+<div><h2>更新日誌</h2><p class="note">近期版本紀錄。</p></div>
+<div class="log">
+<div class="item"><h3>Beta 0.98.1 – 0.98.2</h3><p>新增 15 鍵穿透式瀑布流跟彈面板、譜架管理、MIDI 排除打擊聲道與調性移調、可選依賴 <code>numpy</code> 音檔轉譜、外掛市場（DNS SSRF 防護、強制 SHA-256、撤銷清單）及預設關閉的五層防護自動彈奏（修復 64-bit <code>SendInput</code> 結構大小與和弦同步）。</p></div>
+<div class="item"><h3>Beta 0.97.0 – 0.97.3</h3><p>新增詞典三向合併（<code>core/merge.py</code>）與損壞自動備份、冷啟動背景監看執行緒立即取消連線、Ollama 繞過系統 Proxy 與多螢幕截圖支援。</p></div>
+</div>
+</div></section>
+
+<footer><div class="wrap">
+<p><b>合規與風險說明</b> 本專案預設為純顧問型與視覺跟彈工具（只顯示、不代彈）。0.98.1 新增之「自動彈奏」預設關閉，需使用者二次確認風險後方可啟用。</p>
+<p><b>免責聲明</b> 本專案為玩家自製非官方工具，與《Sky 光·遇》開發商 thatgamecompany 無隸屬關係。</p>
+</div></footer>
+
+<script>
+const REVIEW_SERVER = "http://ctrl-identity-review.duckdns.org";
+const M=[
+["🕯️ 小光","跑圖嚮導（女）","陽光活潑、幹勁十足的跑圖嚮導，熟悉六大地圖、每日任務與季節蠟燭位置。","xiaoguang-max（可於設定綁定 qwen2.5:7b）","熱情精簡規劃高效率路線；不確定的時效資訊一律明說「不確定」。"],
+["🪶 小遇","先祖與邂逅紀錄者（女）","溫柔細膩、充滿詩意，熟悉季節故事、復刻先祖、兌換樹與穿搭。","xiaoyu-max（可於設定綁定 qwen2.5:7b）","溫暖療癒且條理分明，結合黑話詞典提供準確兌換與先祖資訊。"],
+["🌊 黫㵾海","三切面交鋒辯論","三個意識依序發言並互相檢視，最後以表決達成共識。","config.debate_model","【🌑 黫】戰術與風險核心；【🌊 㵾】深淵觀測與遺跡巨獸；【🌀 海】宏觀領航與暴風眼/伊甸路線。共識門檻 ≥ 2/3（66.7%）通過。"],
+["🗂️ Lite 模式","零模型本機資料模式","完全不呼叫 Ollama，零記憶體與 GPU 負擔。","無需安裝任何模型","直接顯示 data/knowledge.json 時效資料，並支援直接查詢 475 條光遇黑話詞典。"]];
+const tabs=document.getElementById("tabs"),panel=document.getElementById("panel");
+function show(i){
+  [...tabs.children].forEach((b,j)=>b.setAttribute("aria-selected",i===j));
+  const m=M[i];panel.innerHTML="";
+  const h=document.createElement("h3");h.textContent=m[0]+" "+m[1];
+  const p=document.createElement("p");p.style.cssText="margin:0;color:var(--sub)";p.textContent=m[2];
+  const d=document.createElement("dl");
+  [["預設模型",m[3]],["定位與特色",m[4]]].forEach(([k,v])=>{
+    const a=document.createElement("dt");a.textContent=k;
+    const b=document.createElement("dd");b.textContent=v;d.append(a,b);
+  });
+  panel.append(h,p,d);
+}
+M.forEach((m,i)=>{const b=document.createElement("button");b.type="button";b.setAttribute("role","tab");b.textContent=m[0];b.onclick=()=>show(i);tabs.appendChild(b)});
+show(0);
+
+// Theme toggle
+const root=document.documentElement,tb=document.getElementById("theme");
+const mq=window.matchMedia("(prefers-color-scheme: dark)");
+function cur(){return root.dataset.theme||(mq.matches?"dark":"light")}
+function label(){tb.textContent=cur()==="dark"?"淺色":"深色"}
+try{const s=localStorage.getItem("theme");if(s)root.dataset.theme=s}catch(e){}
+label();
+tb.onclick=()=>{const n=cur()==="dark"?"light":"dark";root.dataset.theme=n;try{localStorage.setItem("theme",n)}catch(e){}label()};
+
+// File Audit & Upload Logic
+const fileInput = document.getElementById("file-input");
+const dropLabel = document.getElementById("drop-label");
+const reportBox = document.getElementById("audit-report");
+const btnVerify = document.getElementById("btn-verify");
+const btnUpload = document.getElementById("btn-upload");
+const btnGenManifest = document.getElementById("btn-gen-manifest");
+let selectedFile = null;
+let lastAuditPassed = false;
+let lastSha256 = "";
+
+fileInput.onchange = (e) => {
+  selectedFile = e.target.files[0] || null;
+  lastAuditPassed = false;
+  btnUpload.disabled = true;
+  if (selectedFile) {
+    dropLabel.textContent = `📄 已選擇：${selectedFile.name} (${(selectedFile.size / 1024).toFixed(1)} KB)`;
+    reportBox.textContent = "請點擊「1. 執行本地自動預審 & 計算 SHA-256」…";
+  }
+};
+
+async function sha256Hex(buffer) {
+  const hash = await crypto.subtle.digest("SHA-256", buffer);
+  return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
+function parseZipEntries(bytes) {
+  // 解析 ZIP Central Directory 取得檔名清單與檢查路徑安全
+  const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+  let eocd = -1;
+  for (let i = bytes.length - 22; i >= Math.max(0, bytes.length - 65557); i--) {
+    if (view.getUint32(i, true) === 0x06054b50) { eocd = i; break; }
+  }
+  if (eocd < 0) throw new Error("不是合法的 ZIP 壓縮檔（找不到 EOCD 標頭）");
+  const count = view.getUint16(eocd + 10, true);
+  const cdOffset = view.getUint32(eocd + 16, true);
+  let ptr = cdOffset;
+  const entries = [];
+  const dec = new TextDecoder("utf-8");
+  for (let i = 0; i < count; i++) {
+    if (view.getUint32(ptr, true) !== 0x02014b50) throw new Error("ZIP 目錄結構損壞");
+    const compSize = view.getUint32(ptr + 20, true);
+    const uncompSize = view.getUint32(ptr + 24, true);
+    const nameLen = view.getUint16(ptr + 28, true);
+    const extraLen = view.getUint16(ptr + 30, true);
+    const commentLen = view.getUint16(ptr + 32, true);
+    const extAttr = view.getUint32(ptr + 38, true);
+    const name = dec.decode(bytes.subarray(ptr + 46, ptr + 46 + nameLen));
+    entries.push({ name, compSize, uncompSize, extAttr });
+    ptr += 46 + nameLen + extraLen + commentLen;
+  }
+  return entries;
+}
+
+function validateSheetObject(sheet) {
+  if (!sheet || typeof sheet !== "object" || Array.isArray(sheet)) throw new Error("樂譜必須是 JSON 物件");
+  const ev = sheet.events;
+  if (!Array.isArray(ev) || ev.length === 0) throw new Error("樂譜 events 為空");
+  if (ev.length > 20000) throw new Error(`音符數超過上限 (${ev.length} > 20000)`);
+  for (let i = 0; i < ev.length; i++) {
+    const item = ev[i];
+    const t = Number(item.t), k = Number(item.k), d = Number(item.d ?? 0.3);
+    if (!Number.isFinite(t) || !Number.isFinite(d) || !Number.isInteger(k)) {
+      throw new Error(`第 ${i} 個事件包含非有限數值 (NaN/Infinity)`);
+    }
+    if (t < 0) throw new Error(`第 ${i} 個事件時間為負數`);
+    if (k < 0 || k >= 15) throw new Error(`第 ${i} 個事件鍵位超出 0..14`);
+    if (d > 30.0) throw new Error(`第 ${i} 個事件單音長度超過 30 秒上限 (${d}s)`);
+  }
+  return ev.length;
+}
+
+btnVerify.onclick = async () => {
+  const logs = [];
+  lastAuditPassed = false;
+  btnUpload.disabled = true;
+  try {
+    const kind = document.getElementById("sub-kind").value;
+    const id = document.getElementById("sub-id").value.trim().toLowerCase();
+    const ver = document.getElementById("sub-ver").value.trim();
+    const author = document.getElementById("sub-author").value.trim();
+    const rights = document.getElementById("sub-rights").checked;
+
+    if (!/^[a-z0-9_-]{3,64}$/.test(id)) throw new Error("ID 格式不合法（需為 3~64 字元小寫英數、- 或 _）");
+    if (!/^\d+\.\d+\.\d+$/.test(ver)) throw new Error("版本號必須符合 SemVer 格式（例如 1.0.0）");
+    if (!author) throw new Error("請填寫作者暱稱");
+    if (!rights) throw new Error("請勾選版權與安全聲明");
+    if (!selectedFile) throw new Error("請先選擇要上傳的檔案");
+
+    const buf = await selectedFile.arrayBuffer();
+    const bytes = new Uint8Array(buf);
+    lastSha256 = await sha256Hex(buf);
+    logs.push(`✅ SHA-256 計算完成：${lastSha256}`);
+    logs.push(`✅ 檔案大小：${bytes.length} bytes`);
+
+    if (kind === "midi") {
+      if (!/\.(mid|midi)$/i.test(selectedFile.name)) throw new Error("MIDI 投稿副檔名必須為 .mid 或 .midi");
+      if (bytes.length > 2 * 1024 * 1024) throw new Error("MIDI 檔案超過 2 MB 上限");
+      const magic = String.fromCharCode(bytes[0], bytes[1], bytes[2], bytes[3]);
+      if (magic !== "MThd") throw new Error("檔案缺少 MThd 標頭，不是合法的 MIDI 檔");
+      const view = new DataView(buf);
+      const fmt = view.getUint16(8, false);
+      const tracks = view.getUint16(10, false);
+      const div = view.getUint16(12, false);
+      if (div === 0 || (div & 0x8000)) throw new Error("不支援 SMPTE 時間格式或 division 為 0");
+      logs.push(`✅ MIDI 標頭驗證通過：Format ${fmt}｜${tracks} 軌道｜Division ${div}`);
+      logs.push(`ℹ️ 伺服器入庫時將自動排除第 10 聲道（打擊樂鼓聲）並計算 15 鍵最佳移調。`);
+    } else if (kind === "sheet") {
+      if (!/\.json$/i.test(selectedFile.name)) throw new Error("樂譜副檔名必須為 .json");
+      const text = new TextDecoder("utf-8").decode(bytes);
+      const data = JSON.parse(text);
+      const count = validateSheetObject(data);
+      logs.push(`✅ 樂譜 Schema (sheet.validate) 驗證通過：共 ${count} 個合法音符事件`);
+    } else if (kind === "plugin") {
+      if (!/\.zip$/i.test(selectedFile.name)) throw new Error("外掛包必須為 .zip 格式");
+      if (bytes.length > 10 * 1024 * 1024) throw new Error("外掛包超過 10 MB 上限");
+      const entries = parseZipEntries(bytes);
+      let totalUncomp = 0;
+      let hasManifest = false;
+      for (const e of entries) {
+        if (e.name.endsWith("/")) continue;
+        const norm = e.name.replace(/\\/g, "/");
+        if (norm.startsWith("/") || norm.includes("../") || norm.includes(":")) {
+          throw new Error(`偵測到危險路徑 (Zip Slip)：${e.name}`);
+        }
+        const mode = (e.extAttr >>> 16) & 0o170000;
+        if (mode === 0o120000) throw new Error(`禁止包含符號連結 (Symlink)：${e.name}`);
+        if (!norm.toLowerCase().endsWith(".json")) {
+          throw new Error(`資料外掛僅允許 .json 檔案，拒絕：${e.name}`);
+        }
+        if (norm === "plugin.json") hasManifest = true;
+        totalUncomp += e.uncompSize;
+      }
+      if (!hasManifest) throw new Error("ZIP 根目錄缺少 plugin.json");
+      if (totalUncomp > 32 * 1024 * 1024) throw new Error("解壓後總大小超過 32 MB 上限");
+      logs.push(`✅ ZIP 安全檢查通過：共 ${entries.length} 個項目，解壓大小 ${(totalUncomp/1024).toFixed(1)} KB`);
+      logs.push(`✅ 已確認包含 plugin.json 且全數為 .json 檔案（無 .py 程式碼）`);
+    }
+
+    logs.push("\n🎉 本地自動審查全數通過！可送交審查伺服器隔離區。");
+    reportBox.textContent = logs.join("\n");
+    lastAuditPassed = true;
+    btnUpload.disabled = false;
+  } catch (err) {
+    logs.push(`\n❌ 審查拒絕：${err.message}`);
+    reportBox.textContent = logs.join("\n");
+  }
+};
+
+btnUpload.onclick = async () => {
+  if (!lastAuditPassed || !selectedFile) return;
+  btnUpload.disabled = true;
+  reportBox.textContent += `\n\n🔄 正在連線至審查伺服器 ${REVIEW_SERVER}/api/submit …`;
+  const form = new FormData();
+  form.append("id", document.getElementById("sub-id").value.trim().toLowerCase());
+  form.append("name", document.getElementById("sub-name").value.trim());
+  form.append("version", document.getElementById("sub-ver").value.trim());
+  form.append("author", document.getElementById("sub-author").value.trim());
+  form.append("license", document.getElementById("sub-license").value.trim());
+  form.append("desc", document.getElementById("sub-desc").value.trim());
+  form.append("kind", document.getElementById("sub-kind").value);
+  form.append("sha256", lastSha256);
+  form.append("file", selectedFile);
+
+  try {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 6000);
+    const res = await fetch(`${REVIEW_SERVER}/api/submit`, { method: "POST", body: form, signal: ctrl.signal });
+    clearTimeout(timer);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const out = await res.json();
+    reportBox.textContent += `\n✅ 已送入隔離區！審查單號：${out.review_id || "PENDING"}`;
+  } catch (e) {
+    reportBox.textContent += `\n⏳ 審查站（${REVIEW_SERVER}）目前尚未開放或未回應。\n您的檔案已通過本地預審（SHA-256: ${lastSha256}），請於審查站開通後再行上傳。`;
+    btnUpload.disabled = false;
+  }
+};
+
+btnGenManifest.onclick = () => {
+  const manifest = {
+    id: document.getElementById("sub-id").value.trim().toLowerCase() || "my-sky-pack",
+    name: document.getElementById("sub-name").value.trim() || "未命名外掛",
+    version: document.getElementById("sub-ver").value.trim() || "1.0.0",
+    type: "data",
+    min_app_version: "0.98.2",
+    author: document.getElementById("sub-author").value.trim() || "anonymous",
+    license: document.getElementById("sub-license").value.trim() || "CC-BY-4.0",
+    desc: document.getElementById("sub-desc").value.trim() || ""
+  };
+  const blob = new Blob([JSON.stringify(manifest, null, 2) + "\n"], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "plugin.json";
+  a.click();
+};
+</script>
+</body>
+</html>
